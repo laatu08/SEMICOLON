@@ -1,7 +1,7 @@
 const express = require('express');
-const { summerize } = require('../controllers/summarize.controller.js');
+const { summarize } = require('../controllers/summarize.controller.js');
 const router = express.Router();
 
-router.post('/summerize', summerize);
+router.post('/summarize', summarize);
 
 module.exports = router;

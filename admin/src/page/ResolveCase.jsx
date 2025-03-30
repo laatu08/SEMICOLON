@@ -31,21 +31,22 @@ const ResolveCase = () => {
     const handleViewSummary = async (caseData) => {
         setSelectedCase(caseData);
         setIsSummarizing(true);
-        setSummary(""); // Reset summary before fetching new data
-
+        setSummary("");
+    
         try {
-            const response = await axios.post("http://localhost:5000/api/v1/summerize", {
-                prompt: `What is AI?`,
+            const response = await axios.post("http://localhost:5000/api/v1/summarize", {
+                pdfUrl: caseData.case_file_link, // Sending the PDF link
             });
-
+    
             setSummary(response.data.output || "No summary available.");
         } catch (err) {
             console.error("Error fetching summary:", err);
             setSummary("Failed to load summary.");
         }
-
+    
         setIsSummarizing(false);
     };
+    
 
     if (loading) {
         return <div className="text-center mt-10 text-gray-600">Loading cases...</div>;
@@ -75,7 +76,7 @@ const ResolveCase = () => {
                                 <td className="py-2 px-4">{caseData.case_name}</td>
                                 <td className="py-2 px-4">
                                     <a
-                                        href={caseData.case_file_link}
+                                        href={`http://localhost:5000`+caseData.case_file_link}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="text-blue-500 underline"
