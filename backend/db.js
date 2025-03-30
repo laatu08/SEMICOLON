@@ -12,4 +12,4 @@ pool.connect()
     .then(()=>{console.log('Connected to Database');})
     .catch(err=>{console.log(`Connection Error: ${err.stack}`);});
 
-module.exports=pool;
+module.exports={pool};

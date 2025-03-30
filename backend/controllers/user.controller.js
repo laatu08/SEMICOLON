@@ -1,6 +1,6 @@
-const { pool } =require('../models/user.model.js')
+const  {pool}  =require('../db.js')
 
-export const createUser = async (req, res) => {
+const createUser = async (req, res) => {
     const { user_name, phone_no, email, address } = req.body;
 
     if (!user_name || !phone_no || !email || !address) {
@@ -14,7 +14,7 @@ export const createUser = async (req, res) => {
             [user_name, phone_no, email, address]
         );
 
-        res.status(201).json({ message: "User created successfully", data: userResult[0] });
+        res.status(201).json({ message: "User created successfully", data: userResult.rows });
 
     } catch (err) {
         console.error("Error creating user:", err);
@@ -23,3 +23,5 @@ export const createUser = async (req, res) => {
 };
 
 
+
+module.exports={createUser}

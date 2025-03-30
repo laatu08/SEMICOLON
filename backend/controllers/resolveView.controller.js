@@ -1,8 +1,8 @@
 const { pool } = require("../db.js")
 
-export const getResolveCase = async (req, res) => {
+const getResolveCase = async (req, res) => {
     try {
-        const cases = await query(
+        const cases = await pool.query(
             `SELECT 
           cases.id AS case_id,
           cases.case_name,
@@ -21,10 +21,12 @@ export const getResolveCase = async (req, res) => {
         ORDER BY cases.creation_timestamp DESC`
         );
 
-        res.status(200).json({ message: "Cases retrieved successfully", data: cases });
+        res.status(200).json({ message: "Cases retrieved successfully", data: cases.rows });
 
     } catch (err) {
         console.error("Error fetching cases:", err);
         res.status(500).json({ error: "Internal server error" });
     }
 };
+
+module.exports={getResolveCase}

@@ -2,12 +2,12 @@ const {pool} = require("../db.js")
 
 const createTable = async () => {
   const query = `
-    CREATE TABLE cases (
+    CREATE TABLE IF NOT EXISTS cases (
     id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
     case_name VARCHAR(255) NOT NULL,
-    case_file_link TEXT NOT NULL,
-    case_resolve_file_link TEXT NOT NULL,
+    case_file_link VARCHAR(255) NOT NULL,
+    case_resolve_file_link TEXT,
     creation_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     resolved_timestamp TIMESTAMP,
     resolve_status BOOLEAN DEFAULT FALSE,
@@ -16,7 +16,7 @@ const createTable = async () => {
 
   try {
     await pool.query(query);
-    console.log("✅ User table is ready!");
+    console.log("✅ Case table is ready!");
   } catch (err) {
     console.error("❌ Error creating case table:", err);
   }
@@ -24,4 +24,4 @@ const createTable = async () => {
 
 createTable();
 
-module.exports=pool
+module.exports={pool}
