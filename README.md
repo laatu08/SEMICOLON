@@ -1,24 +1,24 @@
 # Legal House
 **Legal House** is an AI-powered legal document review system that helps automate case analysis, summarize legal documents, and provide quick insights for law firms and courts.
-🚀 FeaturesUpload legal documents and case files
-AI-generated case summaries
-Automated legal analysis
-Secure and efficient case management
-🛠 Tech StackFrontendReact.js
-Tailwind CSS
-JavaScript
-ShadCN UI
-BackendNode.js
-Express.js
-DatabasePostgreSQL
-AI/ML ModelDeepseek R1 (1.56B) Pretrained (Local) Model
+- 🚀 FeaturesUpload legal documents and case files
+- AI-generated case summaries
+- Automated legal analysis
+- Secure and efficient case management
+- 🛠 Tech StackFrontendReact.js
+- Tailwind CSS
+- JavaScript
+- ShadCN UI
+- BackendNode.js
+- Express.js
+- DatabasePostgreSQL
+- AI/ML ModelDeepseek R1 (1.56B) Pretrained (Local) Model
 📌 How It WorksA law firm uploads case documents.
-The backend sends the document to the AI model.
-The AI processes and summarizes the document.
-The summary is returned to the law firm for validation.
+- The backend sends the document to the AI model.
+- The AI processes and summarizes the document.
+- The summary is returned to the law firm for validation.
 🔧 Installation & SetupBackend Setup# Clone the repository
-git clone [https://github.com/laatu08/SEMICOLON/]
-cd legal-house/backend
+- git clone [https://github.com/laatu08/SEMICOLON/]
+- cd legal-house/backend
 
 # Install dependencies
 npm install
