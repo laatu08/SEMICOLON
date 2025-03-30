@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
   const [cases, setCases] = useState([]);
+  const [resolveCases, setResolveCases] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -32,7 +33,23 @@ const Home = () => {
       }
     };
 
+    const fetchResolveCases = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/v1/view/view-resolve"
+        );
+        console.log(response);
+        setResolveCases(response.data.data); // Extracting the cases from API response
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching cases:", err);
+        setError("Failed to fetch cases. Please try again later.");
+        setLoading(false);
+      }
+    };
+
     fetchCases();
+    fetchResolveCases();
   }, []);
 
   if (loading) {
@@ -64,8 +81,8 @@ const Home = () => {
               <Users className="h-6 w-6 text-green-600" />
             </div>
             <div>
-              <p className="text-gray-600">Total Clients</p>
-              <p className="text-2xl font-bold">{cases.length}</p>
+              <p className="text-gray-600">Resolved Cases</p>
+              <p className="text-2xl font-bold">{resolveCases.length}</p>
             </div>
           </div>
           <div className="bg-white rounded-lg shadow-sm p-6 flex items-center space-x-4">
@@ -73,8 +90,8 @@ const Home = () => {
               <FileText className="h-6 w-6 text-purple-600" />
             </div>
             <div>
-              <p className="text-gray-600">Documents</p>
-              <p className="text-2xl font-bold">{cases.length}</p>
+              <p className="text-gray-600">Total Documents</p>
+              <p className="text-2xl font-bold">{cases.length + resolveCases.length}</p>
             </div>
           </div>
         </div>
@@ -110,7 +127,7 @@ const Home = () => {
                 </tr>
               </thead>
               <tbody>
-              {cases.length>0 ? (cases.map((caseData) => (
+              {cases.length>0 ? (cases.slice(0,3).map((caseData) => (
                         <tr key={caseData.id} className="border-t">
                             <td className="py-2 px-4">{caseData.user_name}</td>
                             <td className="py-2 px-4">{caseData.case_name}</td>

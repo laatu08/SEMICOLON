@@ -1,6 +1,6 @@
-import React, {useState} from "react";
-import {Menu, Scale, X} from "lucide-react"; // Importing icons from Lucide React
-import {Link} from "react-router-dom";
+import React, { useState } from "react";
+import { Menu, Scale, X } from "lucide-react"; // Importing icons from Lucide React
+import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -9,25 +9,24 @@ const Navbar = () => {
         <nav className="flex items-center justify-between px-8 py-4 shadow-md bg-white fixed top-0 left-0 w-full z-50">
             {/* Logo */}
             <div className="flex gap-2 items-center">
-            <Scale className="h-8 w-8 text-blue-400" />
-
-                <h1 className="text-xl font-semibold">Legal House</h1>
+                <Scale className="h-8 w-8 text-blue-400" />
+                <h1 className="text-xl font-semibold"><Link to="/">Legal House</Link></h1>
             </div>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex gap-8">
-                <Link to="/" className="hover:text-blue-500">
-                    Home
-                </Link>
-                <Link to="/create-case" className="hover:text-blue-500">
-                    Create Case
-                </Link>
-                <Link to="/view-case" className="hover:text-blue-500">
-                    View Cases
-                </Link>
-                <Link to="/resolve-case" className="hover:text-blue-500">
-                    Resolved Cases
-                </Link>
+                {["/", "/create-case", "/view-case", "/resolve-case"].map((path, index) => (
+                    <NavLink
+                        key={index}
+                        to={path}
+                        className={({ isActive }) =>
+                            `hover:text-blue-500 relative ${isActive ? "text-blue-500 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-blue-500" : ""
+                            }`
+                        }
+                    >
+                        {path === "/" ? "Home" : path.replace("-", " ").replace("/", "").replace(/\b\w/g, (c) => c.toUpperCase())}
+                    </NavLink>
+                ))}
             </div>
 
             {/* Mobile Menu Button */}
@@ -45,42 +44,20 @@ const Navbar = () => {
                 ${isMobileMenuOpen ? "block" : "hidden"}`}
             >
                 <ul className="flex flex-col items-center gap-4 py-4">
-                    <li>
-                        <Link
-                            to="/"
-                            className="block py-2 hover:text-blue-500"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                            Home
-                        </Link>
-                    </li>
-                    <li>
-                        <Link
-                            to="/create-case"
-                            className="block py-2 hover:text-blue-500"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                            Create Case
-                        </Link>
-                    </li>
-                    <li>
-                        <Link
-                            to="/view-case"
-                            className="block py-2 hover:text-blue-500"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                            View Cases
-                        </Link>
-                    </li>
-                    <li>
-                        <Link
-                            to="/resolve-case"
-                            className="block py-2 hover:text-blue-500"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                            Resolved Cases
-                        </Link>
-                    </li>
+                    {["/", "/create-case", "/view-case", "/resolve-case"].map((path, index) => (
+                        <li key={index}>
+                            <NavLink
+                                to={path}
+                                className={({ isActive }) =>
+                                    `block py-2 hover:text-blue-500 relative ${isActive ? "text-blue-500 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-blue-500" : ""
+                                    }`
+                                }
+                                onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                                {path === "/" ? "Home" : path.replace("-", " ").replace("/", "").replace(/\b\w/g, (c) => c.toUpperCase())}
+                            </NavLink>
+                        </li>
+                    ))}
                 </ul>
             </div>
         </nav>

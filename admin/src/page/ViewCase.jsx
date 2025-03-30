@@ -140,7 +140,7 @@ const ViewCase = () => {
                         className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400"
                         onClick={() => handleViewSummary(caseData)}
                       >
-                        View Summary
+                        Summarize
                       </button>
                     </DialogTrigger>
                     <DialogContent className="w-9/12 h-5/6 max-w-none max-h-none">
