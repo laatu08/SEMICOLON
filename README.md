@@ -35,7 +35,7 @@ Legal House is an AI-powered legal document review system that helps automate ca
 ### Backend Setup
 ```sh
 # Clone the repository
-git clone https://github.com/nitul8/legal-house.git
+git clone [https://github.com/laatu08/SEMICOLON.git]
 cd legal-house/backend
 
 # Install dependencies
@@ -75,8 +75,7 @@ This project is licensed under the MIT License.
 
 ## 📩 Contact
 For any queries, reach out to us:
-- GitHub: [https://github.com/nitul8](https://github.com/nitul8)
-- Email: [your-email@example.com](mailto:your-email@example.com)
+- GitHub: [https://github.com/laatu08/SEMICOLON.git]
 
 ---
 > "Empowering legal professionals with AI-driven automation!"
