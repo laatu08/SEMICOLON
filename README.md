@@ -17,7 +17,7 @@ The backend sends the document to the AI model.
 The AI processes and summarizes the document.
 The summary is returned to the law firm for validation.
 🔧 Installation & SetupBackend Setup# Clone the repository
-git clone https://github.com/nitul8/legal-house.git
+git clone [https://github.com/nitul8/legal-house.git](https://github.com/laatu08/SEMICOLON/)
 cd legal-house/backend
 
 # Install dependencies
