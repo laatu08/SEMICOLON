@@ -1,10 +1,12 @@
+require("dotenv").config()
+
 const summerize= async (req, res) => {
     const { prompt } = req.body;
 
     const ollamaResponse = await fetch("http://localhost:11434/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ model: "deepseek-r1", prompt }),
+        body: JSON.stringify({ model: process.env.MODEL_NAME, prompt }),
     });
 
     res.setHeader("Content-Type", "text/plain");

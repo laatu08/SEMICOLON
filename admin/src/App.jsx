@@ -8,6 +8,7 @@ import Navbar from './page/Navbar'
 import CreateCase from './page/CreateCase'
 import ViewCase from './page/ViewCase'
 import ResolveCase from './page/ResolveCase'
+import Footer from './page/Footer'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -21,6 +22,7 @@ function App() {
         <Route path='/view-case' element={<ViewCase></ViewCase>}></Route>
         <Route path='/resolve-case' element={<ResolveCase></ResolveCase>}></Route>
       </Routes>
+      <Footer></Footer>
     </BrowserRouter>
   )
 }
