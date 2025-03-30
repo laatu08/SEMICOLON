@@ -1,5 +1,5 @@
-**Legal House**
-Legal House is an AI-powered legal document review system that helps automate case analysis, summarize legal documents, and provide quick insights for law firms and courts.
+# Legal House
+**Legal House** is an AI-powered legal document review system that helps automate case analysis, summarize legal documents, and provide quick insights for law firms and courts.
 🚀 FeaturesUpload legal documents and case files
 AI-generated case summaries
 Automated legal analysis
