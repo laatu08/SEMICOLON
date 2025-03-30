@@ -1,27 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const ViewCase = () => {
     // Mock data for demonstration
-    const cases = [
-        {
-            id: 1,
-            personName: "John Doe",
-            caseName: "Property Dispute",
-            caseFileLink: "https://example.com/case-file-1.pdf",
-        },
-        {
-            id: 2,
-            personName: "Jane Smith",
-            caseName: "Contract Breach",
-            caseFileLink: "https://example.com/case-file-2.pdf",
-        },
-        {
-            id: 3,
-            personName: "Alice Johnson",
-            caseName: "Intellectual Property",
-            caseFileLink: "https://example.com/case-file-3.pdf",
-        },
-    ];
+    const [cases, setCases] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+
+    useEffect(() => {
+        const fetchCases = async () => {
+            try {
+                const response = await axios.get("http://localhost:5000/api/v1/view/view");
+                console.log(response);
+                setCases(response.data.data); // Extracting the cases from API response
+                setLoading(false);
+            } catch (err) {
+                console.error("Error fetching cases:", err);
+                setError("Failed to fetch cases. Please try again later.");
+                setLoading(false);
+            }
+        };
+
+        fetchCases();
+    }, []);
+
+    if (loading) {
+        return <div className="text-center mt-10 text-gray-600">Loading cases...</div>;
+    }
+
+    if (error) {
+        return <div className="text-center mt-10 text-red-500">{error}</div>;
+    }
 
     return (
         <div className="p-4 mt-10">
@@ -36,13 +45,13 @@ const ViewCase = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {cases.map((caseData) => (
+                    {cases.length>0 ? (cases.map((caseData) => (
                         <tr key={caseData.id} className="border-t">
-                            <td className="py-2 px-4">{caseData.personName}</td>
-                            <td className="py-2 px-4">{caseData.caseName}</td>
+                            <td className="py-2 px-4">{caseData.user_name}</td>
+                            <td className="py-2 px-4">{caseData.case_name}</td>
                             <td className="py-2 px-4">
                                 <a
-                                    href={caseData.caseFileLink}
+                                    href={`http://localhost:5000`+caseData.case_file_link}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-blue-500 underline"
@@ -56,7 +65,13 @@ const ViewCase = () => {
                                 </button>
                             </td>
                         </tr>
-                    ))}
+                    ))) : (
+                        <tr>
+                            <td colSpan="4" className="text-center py-4 text-gray-500">
+                                No unresolved cases found.
+                            </td>
+                        </tr>
+                    )}
                 </tbody>
             </table>
         </div>
