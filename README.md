@@ -56,9 +56,6 @@ npm install
 npm run dev
 ```
 
-## 📸 Screenshots
-_(Add some screenshots here)_
-
 ## 🤝 Contributors
 - **Abishesk Prasad**
 - **Nitul Das**
