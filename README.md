@@ -1,45 +1,83 @@
 # Legal House
-**Legal House** is an AI-powered legal document review system that helps automate case analysis, summarize legal documents, and provide quick insights for law firms and courts.
-- 🚀 FeaturesUpload legal documents and case files
+
+Legal House is an AI-powered legal document review system that helps automate case analysis, summarize legal documents, and provide quick insights for law firms and courts.
+
+## 🚀 Features
+- Upload legal documents and case files
 - AI-generated case summaries
 - Automated legal analysis
 - Secure and efficient case management
-- 🛠 Tech StackFrontendReact.js
+
+## 🛠 Tech Stack
+### Frontend
+- React.js
 - Tailwind CSS
 - JavaScript
 - ShadCN UI
-- BackendNode.js
+
+### Backend
+- Node.js
 - Express.js
-- DatabasePostgreSQL
-- AI/ML ModelDeepseek R1 (1.56B) Pretrained (Local) Model
-📌 How It WorksA law firm uploads case documents.
-- The backend sends the document to the AI model.
-- The AI processes and summarizes the document.
-- The summary is returned to the law firm for validation.
-🔧 Installation & SetupBackend Setup# Clone the repository
-- git clone [https://github.com/laatu08/SEMICOLON/]
-- cd legal-house/backend
+
+### Database
+- PostgreSQL
+
+### AI/ML Model
+- Deepseek R1 (1.56B) Pretrained (Local) Model
+
+## 📌 How It Works
+1. A law firm uploads case documents.
+2. The backend sends the document to the AI model.
+3. The AI processes and summarizes the document.
+4. The summary is returned to the law firm for validation.
+
+## 🔧 Installation & Setup
+### Backend Setup
+```sh
+# Clone the repository
+git clone https://github.com/nitul8/legal-house.git
+cd legal-house/backend
 
 # Install dependencies
 npm install
 
 # Start the server
-npm startFrontend Setupcd legal-house/frontend
+npm start
+```
+
+### Frontend Setup
+```sh
+cd legal-house/frontend
 
 # Install dependencies
 npm install
 
 # Start the frontend
-npm run dev📸 Screenshots(Add some screenshots here)
-🤝 ContributorsAbishesk Prasad
-Nitul Das
-Partha Borah
-Sourav Kumar Barman
-📜 LicenseThis project is licensed under the MIT License.
-💡 Future EnhancementsImprove AI model efficiency for faster processing.
-Implement case law recommendations.
-Add multi-language support.
-📩 ContactFor any queries, reach out to us:
-GitHub: https://github.com/nitul8
-Email: your-email@example.com
-"Empowering legal professionals with AI-driven automation!"
+npm run dev
+```
+
+## 📸 Screenshots
+_(Add some screenshots here)_
+
+## 🤝 Contributors
+- **Abishesk Prasad**
+- **Nitul Das**
+- **Partha Borah**
+- **Sourav Kumar Barman**
+
+## 📜 License
+This project is licensed under the MIT License.
+
+## 💡 Future Enhancements
+- Improve AI model efficiency for faster processing.
+- Implement case law recommendations.
+- Add multi-language support.
+
+## 📩 Contact
+For any queries, reach out to us:
+- GitHub: [https://github.com/nitul8](https://github.com/nitul8)
+- Email: [your-email@example.com](mailto:your-email@example.com)
+
+---
+> "Empowering legal professionals with AI-driven automation!"
+
