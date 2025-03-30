@@ -24,6 +24,8 @@ app.listen(PORT,async()=>{
 
 const createRoutes=require("./routes/create.route.js")
 const viewRoutes=require("./routes/view.route.js")
+const summerizeRoute= require("./routes/summerize.route.js")
 
 app.use("/api/v1/create",createRoutes)
 app.use("/api/v1/view",viewRoutes)
+app.use("/api/v1/",summerizeRoute)
