@@ -34,11 +34,12 @@ const ResolveCase = () => {
         setSummary("");
     
         try {
-            const response = await axios.post("http://localhost:5000/api/v1/summarize", {
-                pdfUrl: caseData.case_file_link, // Sending the PDF link
-            });
-    
-            setSummary(response.data.output || "No summary available.");
+            const response = await axios.get(`http://localhost:5000/api/v1/view/get-summary?id=${caseData.case_id}`);
+            console.log(response);
+            const op = response.data.data.case_resolve_file_link || "No summary available."; // Assuming there's a 'summary' field
+            const fop = op.replace(/<think>.*?<\/think>/gs, "")
+
+            setSummary(fop);
         } catch (err) {
             console.error("Error fetching summary:", err);
             setSummary("Failed to load summary.");
