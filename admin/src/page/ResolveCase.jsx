@@ -7,6 +7,9 @@ const ResolveCase = () => {
     const [cases, setCases] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [summary, setSummary] = useState(""); 
+    const [isSummarizing, setIsSummarizing] = useState(false); 
+
 
     useEffect(() => {
         const fetchCases = async () => {
@@ -24,6 +27,25 @@ const ResolveCase = () => {
 
         fetchCases();
     }, []);
+
+    const handleViewSummary = async (caseData) => {
+        setSelectedCase(caseData);
+        setIsSummarizing(true);
+        setSummary(""); // Reset summary before fetching new data
+
+        try {
+            const response = await axios.post("http://localhost:5000/api/v1/summerize", {
+                prompt: `What is AI?`,
+            });
+
+            setSummary(response.data.output || "No summary available.");
+        } catch (err) {
+            console.error("Error fetching summary:", err);
+            setSummary("Failed to load summary.");
+        }
+
+        setIsSummarizing(false);
+    };
 
     if (loading) {
         return <div className="text-center mt-10 text-gray-600">Loading cases...</div>;
@@ -66,7 +88,7 @@ const ResolveCase = () => {
                                         <DialogTrigger asChild>
                                             <button
                                                 className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400"
-                                                onClick={() => setSelectedCase(caseData)}
+                                                onClick={() => handleViewSummary(caseData)}
                                             >
                                                 View Summary
                                             </button>
@@ -81,7 +103,7 @@ const ResolveCase = () => {
                                                     <textarea
                                                         readOnly
                                                         className="w-full mt-3 h-96 p-4 border rounded-md bg-gray-100 text-gray-700"
-                                                        value="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+                                                        value={isSummarizing ? "Summarizing..." : summary}
                                                     />
                                                 </DialogDescription>
                                             </DialogHeader>

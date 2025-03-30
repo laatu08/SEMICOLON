@@ -18,7 +18,7 @@ const Footer = () => {
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <Scale className="h-8 w-8 text-blue-400" />
-              <span className="text-xl font-bold">LegalCase Pro</span>
+              <span className="text-xl font-bold">Legal House</span>
             </div>
             <p className="text-gray-400">
               Empowering legal professionals with modern case management

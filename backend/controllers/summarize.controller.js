@@ -1,20 +1,51 @@
-require("dotenv").config()
+require("dotenv").config();
 
-const summerize= async (req, res) => {
+const summerize = async (req, res) => {
     const { prompt } = req.body;
 
-    const ollamaResponse = await fetch("http://localhost:11434/api/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ model: process.env.MODEL_NAME, prompt }),
-    });
+    try {
+        const ollamaResponse = await fetch("http://localhost:11434/api/generate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ model: process.env.MODEL_NAME, prompt }),
+        });
 
-    res.setHeader("Content-Type", "text/plain");
+        if (!ollamaResponse.body) {
+            return res.status(500).json({ error: "No response from model" });
+        }
 
-    for await (const chunk of ollamaResponse.body) {
-        res.write(chunk); // Stream chunks to the frontend
+        let fullResponse = ""; // Store accumulated response
+        const reader = ollamaResponse.body.getReader();
+        const decoder = new TextDecoder("utf-8");
+
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            const chunk = decoder.decode(value, { stream: true });
+            
+            // Each line in the response is a JSON object, split and process each one
+            const lines = chunk.split("\n").filter(line => line.trim() !== ""); 
+
+            for (const line of lines) {
+                try {
+                    const jsonChunk = JSON.parse(line); // Parse each JSON object
+                    if (jsonChunk.response) {
+                        fullResponse += jsonChunk.response + " "; // Append response text
+                    }
+                } catch (err) {
+                    console.error("Error parsing chunk:", err, "Chunk:", line);
+                }
+            }
+        }
+
+        // Send the final accumulated response
+        res.json({ success: true, output: fullResponse.trim() });
+
+    } catch (err) {
+        console.error("Error processing request:", err);
+        res.status(500).json({ error: "Internal Server Error" });
     }
-    res.end();
-}
+};
 
 module.exports = { summerize };

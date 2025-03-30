@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Menu, X} from "lucide-react"; // Importing icons from Lucide React
+import {Menu, Scale, X} from "lucide-react"; // Importing icons from Lucide React
 import {Link} from "react-router-dom";
 
 const Navbar = () => {
@@ -8,7 +8,9 @@ const Navbar = () => {
     return (
         <nav className="flex items-center justify-between px-8 py-4 shadow-md bg-white fixed top-0 left-0 w-full z-50">
             {/* Logo */}
-            <div className="flex items-center">
+            <div className="flex gap-2 items-center">
+            <Scale className="h-8 w-8 text-blue-400" />
+
                 <h1 className="text-xl font-semibold">Legal House</h1>
             </div>
 
