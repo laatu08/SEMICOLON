@@ -1,28 +1,38 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 const ResolveCase = () => {
+    const [selectedCase, setSelectedCase] = useState(null);
+    const [cases, setCases] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
 
-    // Mock data for demonstration
-    const cases = [
-        {
-            id: 1,
-            personName: "John Doe",
-            caseName: "Property Dispute",
-            caseFileLink: "https://example.com/case-file-1.pdf",
-        },
-        {
-            id: 2,
-            personName: "Jane Smith",
-            caseName: "Contract Breach",
-            caseFileLink: "https://example.com/case-file-2.pdf",
-        },
-        {
-            id: 3,
-            personName: "Alice Johnson",
-            caseName: "Intellectual Property",
-            caseFileLink: "https://example.com/case-file-3.pdf",
-        },
-    ];
+    useEffect(() => {
+        const fetchCases = async () => {
+            try {
+                const response = await axios.get("http://localhost:5000/api/v1/view/view-resolve");
+                console.log(response);
+                setCases(response.data.data); // Extracting the cases from API response
+                setLoading(false);
+            } catch (err) {
+                console.error("Error fetching cases:", err);
+                setError("Failed to fetch cases. Please try again later.");
+                setLoading(false);
+            }
+        };
+
+        fetchCases();
+    }, []);
+
+    if (loading) {
+        return <div className="text-center mt-10 text-gray-600">Loading cases...</div>;
+    }
+
+    if (error) {
+        return <div className="text-center mt-10 text-red-500">{error}</div>;
+    }
+
     return (
         <div>
             <div className="p-4">
@@ -39,11 +49,11 @@ const ResolveCase = () => {
                     <tbody>
                         {cases.map((caseData) => (
                             <tr key={caseData.id} className="border-t">
-                                <td className="py-2 px-4">{caseData.personName}</td>
-                                <td className="py-2 px-4">{caseData.caseName}</td>
+                                <td className="py-2 px-4">{caseData.user_name}</td>
+                                <td className="py-2 px-4">{caseData.case_name}</td>
                                 <td className="py-2 px-4">
                                     <a
-                                        href={caseData.caseFileLink}
+                                        href={caseData.case_file_link}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="text-blue-500 underline"
@@ -52,9 +62,31 @@ const ResolveCase = () => {
                                     </a>
                                 </td>
                                 <td className="py-2 px-4">
-                                    <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400">
-                                        View Summary
-                                    </button>
+                                    <Dialog>
+                                        <DialogTrigger asChild>
+                                            <button
+                                                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                                onClick={() => setSelectedCase(caseData)}
+                                            >
+                                                View Summary
+                                            </button>
+                                        </DialogTrigger>
+                                        <DialogContent className="w-9/12 h-5/6 max-w-none max-h-none">
+                                            <DialogHeader>
+                                                <DialogTitle>Case Summary</DialogTitle>
+                                                <DialogDescription>
+                                                    <p><strong>Person Name:</strong> {selectedCase?.user_name}</p>
+                                                    <p><strong>Case Name:</strong> {selectedCase?.case_name}</p>
+                                                    <p><strong>Details:</strong></p>
+                                                    <textarea
+                                                        readOnly
+                                                        className="w-full mt-3 h-96 p-4 border rounded-md bg-gray-100 text-gray-700"
+                                                        value="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+                                                    />
+                                                </DialogDescription>
+                                            </DialogHeader>
+                                        </DialogContent>
+                                    </Dialog>
                                 </td>
                             </tr>
                         ))}
