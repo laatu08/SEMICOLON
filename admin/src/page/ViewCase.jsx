@@ -16,53 +16,54 @@ const ViewCase = () => {
   const [error, setError] = useState("");
   const [summary, setSummary] = useState("");
   const [isSummarizing, setIsSummarizing] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const fetchCases = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/api/v1/view/view"
+      );
+      console.log(response);
+      setCases(response.data.data); // Extracting the cases from API response
+      setLoading(false);
+    } catch (err) {
+      console.error("Error fetching cases:", err);
+      setError("Failed to fetch cases. Please try again later.");
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchCases = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:5000/api/v1/view/view"
-        );
-        console.log(response);
-        setCases(response.data.data); // Extracting the cases from API response
-        setLoading(false);
-      } catch (err) {
-        console.error("Error fetching cases:", err);
-        setError("Failed to fetch cases. Please try again later.");
-        setLoading(false);
-      }
-    };
-
     fetchCases();
   }, []);
 
-//   const formatText=(text)=>{
-//     return text.replace(/<think>.*?<\/think>/gs, "").replace(/\*\*(.*?)\*\*/g, "<b>$1</b>").replace(/\*(.*?)\*/g, "<i>$1</i>").replace(/`(.*?)`/g, "<code>$1</code>");
-//   }
+  //   const formatText=(text)=>{
+  //     return text.replace(/<think>.*?<\/think>/gs, "").replace(/\*\*(.*?)\*\*/g, "<b>$1</b>").replace(/\*(.*?)\*/g, "<i>$1</i>").replace(/`(.*?)`/g, "<code>$1</code>");
+  //   }
 
-//   const handleViewSummary = async (caseData) => {
-//     setSelectedCase(caseData);
-//     setIsSummarizing(true);
-//     setSummary("");
+  //   const handleViewSummary = async (caseData) => {
+  //     setSelectedCase(caseData);
+  //     setIsSummarizing(true);
+  //     setSummary("");
 
-//     try {
-//       const response = await axios.post(
-//         "http://localhost:5000/api/v1/summarize",
-//         {
-//           pdfUrl: caseData.case_file_link, // Sending the PDF link
-//         }
-//       );
+  //     try {
+  //       const response = await axios.post(
+  //         "http://localhost:5000/api/v1/summarize",
+  //         {
+  //           pdfUrl: caseData.case_file_link, // Sending the PDF link
+  //         }
+  //       );
 
-//       const op = response.data.output.replace(/<think>.*?<\/think>/gs, "")
+  //       const op = response.data.output.replace(/<think>.*?<\/think>/gs, "")
 
-//       setSummary(op || "No summary available.");
-//     } catch (err) {
-//       console.error("Error fetching summary:", err);
-//       setSummary("Failed to load summary.");
-//     }
+  //       setSummary(op || "No summary available.");
+  //     } catch (err) {
+  //       console.error("Error fetching summary:", err);
+  //       setSummary("Failed to load summary.");
+  //     }
 
-//     setIsSummarizing(false);
-//   };
+  //     setIsSummarizing(false);
+  //   };
 
   const handleViewSummary = async (caseData) => {
     setSelectedCase(caseData);
@@ -71,29 +72,45 @@ const ViewCase = () => {
     console.log(caseData);
 
     try {
-        const response = await axios.post("http://localhost:5000/api/v1/summarize", {
-            pdfUrl: caseData.case_file_link,
-            caseId: caseData.case_id, // Sending case ID for database update
-        });
+      const response = await axios.post(
+        "http://localhost:5000/api/v1/summarize",
+        {
+          pdfUrl: caseData.case_file_link,
+          caseId: caseData.case_id, // Sending case ID for database update
+        }
+      );
 
-        const op = response.data.output.replace(/<think>.*?<\/think>/gs, "")
-        setSummary(op || "No summary available.");
+      const op = response.data.output.replace(/<think>.*?<\/think>/gs, "");
+      setSummary(op || "No summary available.");
 
-        // Update case status in UI after resolving
-        setCases(prevCases =>
-            prevCases.map(c =>
-                c.id === caseData.id
-                    ? { ...c, resolve_status: true, case_resolve_file_link: response.data.output }
-                    : c
-            )
-        );
+      // Update case status in UI after resolving
+      setCases((prevCases) =>
+        prevCases.map((c) =>
+          c.id === caseData.id
+            ? {
+                ...c,
+                resolve_status: true,
+                case_resolve_file_link: response.data.output,
+              }
+            : c
+        )
+      );
+
+      // fetchCases()
     } catch (err) {
-        console.error("Error fetching summary:", err);
-        setSummary("Failed to load summary.");
+      console.error("Error fetching summary:", err);
+      setSummary("Failed to load summary.");
     }
 
     setIsSummarizing(false);
-};
+  };
+
+  const handleDialogClose = (isOpen) => {
+    setIsDialogOpen(isOpen);
+    if (!isOpen) {
+      fetchCases(); // Fetch cases only when dialog is closed
+    }
+  };
 
   if (loading) {
     return (
@@ -134,7 +151,7 @@ const ViewCase = () => {
                   </a>
                 </td>
                 <td className="py-2 px-4">
-                  <Dialog>
+                  <Dialog onOpenChange={()=>fetchCases()}>
                     <DialogTrigger asChild>
                       <button
                         className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400"
