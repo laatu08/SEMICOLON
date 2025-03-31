@@ -35,19 +35,21 @@ Legal House is an AI-powered legal document review system that helps automate ca
 ### Backend Setup
 ```sh
 # Clone the repository
-git clone [https://github.com/laatu08/SEMICOLON.git]
-cd legal-house/backend
+git clone https://github.com/laatu08/SEMICOLON.git
+
+
+cd backend
 
 # Install dependencies
 npm install
 
 # Start the server
-npm start
+npx nodemon index.js
 ```
 
 ### Frontend Setup
 ```sh
-cd legal-house/frontend
+cd admin
 
 # Install dependencies
 npm install
@@ -57,9 +59,9 @@ npm run dev
 ```
 
 ## 🤝 Contributors
+- **Partha Borah**
 - **Abishesk Prasad**
 - **Nitul Das**
-- **Partha Borah**
 - **Sourav Kumar Barman**
 
 ## 📜 License
