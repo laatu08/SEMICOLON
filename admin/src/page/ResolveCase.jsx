@@ -84,7 +84,7 @@ const ResolveCase = () => {
             </tr>
           </thead>
           <tbody>
-            {cases.map((caseData) => (
+            {cases.length>0? (cases.map((caseData) => (
               <tr key={caseData.id} className="border-t">
                 <td className="py-2 px-4">{caseData.user_name}</td>
                 <td className="py-2 px-4">{caseData.case_name}</td>
@@ -146,7 +146,14 @@ const ResolveCase = () => {
                   </Dialog>
                 </td>
               </tr>
-            ))}
+            ))
+          ):(
+            <tr>
+              <td colSpan="4" className="text-center py-4 text-gray-500">
+                No resolved cases found.
+              </td>
+            </tr>
+          )}
           </tbody>
         </table>
       </div>

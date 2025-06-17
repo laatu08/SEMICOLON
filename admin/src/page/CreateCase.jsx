@@ -56,7 +56,7 @@ const CreateCase = () => {
 
       toast.success("New case created successfully!", {
         description: `${case_name} has been added to your cases.`,
-        duration: 5000,
+        duration: 3000,
       });
     } catch (error) {
       console.error("Error:", error);
