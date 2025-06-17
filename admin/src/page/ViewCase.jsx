@@ -21,7 +21,7 @@ const ViewCase = () => {
   const fetchCases = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/v1/view/view"
+        "https://semicolon-hd1e.onrender.com/api/v1/view/view"
       );
       console.log(response);
       setCases(response.data.data); // Extracting the cases from API response
