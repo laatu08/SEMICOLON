@@ -21,7 +21,7 @@ const Home = () => {
     const fetchCases = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/v1/view/view"
+          "https://semicolon-hd1e.onrender.com/api/v1/view/view"
         );
         console.log(response);
         setCases(response.data.data); // Extracting the cases from API response
@@ -36,7 +36,7 @@ const Home = () => {
     const fetchResolveCases = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/v1/view/view-resolve"
+          "https://semicolon-hd1e.onrender.com/api/v1/view/view-resolve"
         );
         console.log(response);
         setResolveCases(response.data.data); // Extracting the cases from API response

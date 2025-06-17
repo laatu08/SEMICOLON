@@ -73,7 +73,7 @@ const ViewCase = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/summarize",
+        "https://semicolon-hd1e.onrender.com/api/v1/summarize",
         {
           pdfUrl: caseData.case_file_link,
           caseId: caseData.case_id, // Sending case ID for database update
