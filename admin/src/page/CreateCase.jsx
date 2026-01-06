@@ -33,8 +33,8 @@ const CreateCase = () => {
     try {
       // Step 1: Create User
       const userResponse = await axios.post(
-        // "http://localhost:5000/api/v1/create/user",
-        "https://semicolon-hd1e.onrender.com/api/v1/create/user",
+        "http://localhost:5000/api/v1/create/user",
+        // "https://semicolon-hd1e.onrender.com/api/v1/create/user",
         {
           user_name,
           phone_no,
@@ -51,7 +51,10 @@ const CreateCase = () => {
       formData.append("case_name", case_name);
       formData.append("case_file_link", caseFile);
 
-      await axios.post("https://semicolon-hd1e.onrender.com/api/v1/create/case", formData, {
+      await axios.post(
+        "http://localhost:5000/api/v1/create/case",
+        // "https://semicolon-hd1e.onrender.com/api/v1/create/case",
+         formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 

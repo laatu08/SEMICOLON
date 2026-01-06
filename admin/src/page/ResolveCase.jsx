@@ -22,7 +22,8 @@ const ResolveCase = () => {
     const fetchCases = async () => {
       try {
         const response = await axios.get(
-          "https://semicolon-hd1e.onrender.com/api/v1/view/view-resolve"
+          "http://localhost:5000/api/v1/view/view-resolve"
+          // "https://semicolon-hd1e.onrender.com/api/v1/view/view-resolve"
         );
         console.log(response);
         setCases(response.data.data); // Extracting the cases from API response
@@ -44,7 +45,8 @@ const ResolveCase = () => {
 
     try {
       const response = await axios.get(
-        `https://semicolon-hd1e.onrender.com/api/v1/view/get-summary?id=${caseData.case_id}`
+        // `https://semicolon-hd1e.onrender.com/api/v1/view/get-summary?id=${caseData.case_id}`
+        `http://localhost:5000/api/v1/view/get-summary?id=${caseData.case_id}`
       );
       console.log(response);
       const op =

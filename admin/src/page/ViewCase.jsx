@@ -21,7 +21,8 @@ const ViewCase = () => {
   const fetchCases = async () => {
     try {
       const response = await axios.get(
-        "https://semicolon-hd1e.onrender.com/api/v1/view/view"
+        "http://localhost:5000/api/v1/view/view"
+        // "https://semicolon-hd1e.onrender.com/api/v1/view/view"
       );
       console.log(response);
       setCases(response.data.data); // Extracting the cases from API response
@@ -73,7 +74,8 @@ const ViewCase = () => {
 
     try {
       const response = await axios.post(
-        "https://semicolon-hd1e.onrender.com/api/v1/summarize",
+        "http://localhost:5000/api/v1/summarize",
+        // "https://semicolon-hd1e.onrender.com/api/v1/summarize",
         {
           pdfUrl: caseData.case_file_link,
           caseId: caseData.case_id, // Sending case ID for database update
